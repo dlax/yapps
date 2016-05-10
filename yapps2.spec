@@ -8,7 +8,7 @@
 %endif
 
 %define project_name yapps2
-%define project_version 2.1.1
+%define project_version 2.2.0
 %define project_release logilab
 %define project_url https://github.com/smurfix/yapps
 %define project_summary Yet Another Python Parser System
