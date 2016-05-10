@@ -7,28 +7,21 @@
 %define __python /usr/bin/python
 %endif
 
-%define project_name yapps2
-%define project_version 2.2.0
-%define project_release logilab
-%define project_url https://github.com/smurfix/yapps
-%define project_summary Yet Another Python Parser System
-
-Summary: %{project_summary}
-Name: %{python}-%{project_name}
-Version: %{project_version}
-Release: %{project_release}%{?dist}
-Source0: http://download.logilab.org/pub/yapps/%{project_name}-%{version}.zip
-License: LGPLv2+
-Group: Development/Languages/Python
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Prefix: %{_prefix}
-BuildArch: noarch
-Vendor: Logilab <contact@logilab.fr>
-Packager: Pierre GM <pierre.gerard-marchant@logilab.fr>
-Url: %{project_url}
-Requires: %{python}
-BuildRequires: %{python}
-
+Summary:        Yet Another Python Parser System
+Name:           %{python}-yapps2
+Version:        2.2.0
+Release:        logilab.1%{?dist}
+Source0:        http://download.logilab.org/pub/yapps/yapps2-%{version}.zip
+License:        LGPLv2+
+Group:          Development/Languages/Python
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildArch:      noarch
+Vendor:         Logilab <contact@logilab.fr>
+Url:            https://github.com/smurfix/yapps
+Requires:       %{python}
+Requires:       %{python}-setuptools
+BuildRequires:  %{python}
+BuildRequires:  %{python}-setuptools
 
 %description
 YAPPS is an easy to use parser generator that is written in Python and
@@ -49,7 +42,7 @@ original YAPPS source:
 - read input incrementally
 
 %prep
-%setup -c
+%setup -q -n yapps2-%{version}
 
 %build
 %{__python} setup.py build
@@ -60,7 +53,7 @@ find . -name '*.py' -type f -print0 |  xargs -0 sed -i '1,3s;^#!.*python.*$;#! /
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__python} setup.py install --skip-build --no-compile --prefix=%{_prefix} --root $RPM_BUILD_ROOT %{?python_scriptarch: --install-scripts=%{python_scriptarch}}
+%{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT %{?python_scriptarch: --install-scripts=%{python_scriptarch}}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
